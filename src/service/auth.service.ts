@@ -1,0 +1,34 @@
+import { LoginDto } from './../dto/auth.dto';
+import { Injectable } from "@nestjs/common";
+import { JwtModule, JwtService } from '@nestjs/jwt';
+
+@Injectable()
+export class AuthService {
+    constructor(
+        private readonly JwtService: JwtService
+    ) {}
+
+    async login(data: LoginDto) {
+        const { name, password } = data;
+        // const entity = await this.userService.findByName(name);
+        // if (!entity) {
+        //   throw new UnauthorizedException('用户名不存在。');
+        // }
+        // if (!(await entity.comparePassword(password))) {
+        //   throw new UnauthorizedException('密码不匹配。');
+        // }
+        const id = 52870;
+        const payload = { id, name };
+        const token = this.signToken(payload);
+
+        return {
+            ...payload,
+            token
+        };
+    }
+
+    signToken(data: JwtModule) {
+        return this.JwtService.sign(data);
+    }
+}
+
