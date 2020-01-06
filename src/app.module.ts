@@ -5,11 +5,10 @@ import { defaultSgy } from './config/app.config';
 import { CatsService } from './service/cats.service';
 import { CatsController } from './controller/cats.controller';
 
-
 @Module({
   imports: [
     AuthModule,
-    PassportModule.register({defaultStrategy: defaultSgy})
+    PassportModule.register({ defaultStrategy: defaultSgy }),
   ],
   controllers: [CatsController],
   providers: [CatsService],

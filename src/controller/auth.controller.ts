@@ -4,9 +4,7 @@ import { AuthService } from './../service/auth.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(
-    private readonly authService: AuthService
-  ) { }
+  constructor(private readonly authService: AuthService) {}
 
   @Post('login')
   async login(@Body() data: LoginDto) {

@@ -6,15 +6,15 @@ import { secretKey } from './../config/app.config';
 import { JwtStrategy } from './../strategy/jwt.strategy';
 
 @Module({
-    imports: [
-        JwtModule.register({
-            privateKey: secretKey,
-            signOptions: {
-                expiresIn: '1h'
-            }
-        })
-    ],
-    controllers: [AuthController],
-    providers: [AuthService, JwtStrategy]
+  imports: [
+    JwtModule.register({
+      privateKey: secretKey,
+      signOptions: {
+        expiresIn: '1h',
+      },
+    }),
+  ],
+  controllers: [AuthController],
+  providers: [AuthService, JwtStrategy],
 })
 export class AuthModule {}
