@@ -2,33 +2,33 @@ import { Entity, Column, ObjectID, ObjectIdColumn } from 'typeorm';
 
 @Entity()
 export class Users {
-  @ObjectIdColumn() 
+  @ObjectIdColumn()
   _id: ObjectID;
 
-  @Column() 
+  @Column()
   username: string;
 
-  @Column() 
+  @Column()
   password: string;
 
-  @Column() 
+  @Column()
   email: string;
 
-  @Column() 
+  @Column()
   token: string;
 
-  @Column() 
+  @Column()
   apiToken: string;
 
   @Column()
   teams: Array<{
-    _id: ObjectID,
-    name: String,
-    icon: String,
+    _id: ObjectID;
+    name: String;
+    icon: String;
     role: {
-        type: String,
-        enum: ["owner", "manager", "guest"]
-    }
+      type: String;
+      enum: ['owner', 'manager', 'guest'];
+    };
   }>;
 
   @Column()

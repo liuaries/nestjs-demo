@@ -10,13 +10,16 @@ export class AuthService {
     private readonly JwtService: JwtService,
 
     @Inject('UserRepository')
-    private readonly userRepository: MongoRepository<Users>
+    private readonly userRepository: MongoRepository<Users>,
   ) {}
 
   async login(data: LoginDto) {
     const { name, password } = data;
-    const entity = await this.userRepository.findOne({username: name, password: password })
-    
+    const entity = await this.userRepository.findOne({
+      username: name,
+      password: password,
+    });
+
     if (!entity) {
       throw new UnauthorizedException('用户名或密码错误!');
     }

@@ -9,20 +9,21 @@ import { Users } from './../entity/user.entity';
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
     @Inject('UserRepository')
-    private readonly userRepository: MongoRepository<Users>
+    private readonly userRepository: MongoRepository<Users>,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      ignoreExpiration: false,
       secretOrKey: secretKey,
     });
   }
 
   async validate(payload, done: VerifiedCallback) {
     const { name } = payload;
-    const entity = await this.userRepository.findOne({username: name})
+    const entity = await this.userRepository.findOne({ username: name });
 
     if (!entity) {
-        throw new UnauthorizedException('没找到用户!');
+      throw new UnauthorizedException('没找到用户!');
     }
     return { ...payload };
   }

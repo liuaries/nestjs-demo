@@ -14,9 +14,6 @@ import { userProvider } from './provider/user.provider';
     PassportModule.register({ defaultStrategy: defaultSgy }),
   ],
   controllers: [CatsController],
-  providers: [
-    ...userProvider,
-    CatsService
-  ],
+  providers: [...userProvider, CatsService],
 })
 export class AppModule {}

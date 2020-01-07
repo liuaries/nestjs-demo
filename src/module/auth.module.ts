@@ -18,10 +18,6 @@ import { userProvider } from 'src/provider/user.provider';
     }),
   ],
   controllers: [AuthController],
-  providers: [
-    ...userProvider,
-    AuthService, 
-    JwtStrategy
-  ],
+  providers: [...userProvider, AuthService, JwtStrategy],
 })
 export class AuthModule {}
