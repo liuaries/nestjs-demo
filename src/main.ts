@@ -1,3 +1,4 @@
+import { ApiParamsValidationPipe } from './infrastructure/pipe/api.params.validation.pipe';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
@@ -19,6 +20,7 @@ async function bootstrap() {
 
   app.use(logger);
   app.enableCors();
+  app.useGlobalPipes(new ApiParamsValidationPipe());
   app.useGlobalFilters(new ResponseErrorExceptionFilter());// 全局注册错误的过滤器
   app.useGlobalInterceptors(new ResponseSuccessTransformInterceptor());// 全局注册拦截器
   await app.listen(3000);
