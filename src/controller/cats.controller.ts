@@ -1,12 +1,4 @@
-import {
-  Controller,
-  Body,
-  Param,
-  Get,
-  Post,
-  Delete,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Body, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiTags, ApiOperation } from '@nestjs/swagger';
 import { Cat } from './../service/interfaces/cat.interface';
@@ -22,13 +14,13 @@ export class CatsController {
 
   @ApiOperation({ summary: '添加猫' })
   @Post('/create')
-  async create(@Body() createCatDto: CreateCatDto) {
+  create(@Body() createCatDto: CreateCatDto) {
     this.catsService.create(createCatDto);
   }
 
   @ApiOperation({ summary: '查询猫列表' })
   @Post('/queryAll')
-  async findAll(): Promise<Cat[]> {
+  findAll() {
     return this.catsService.findAll();
   }
 }
