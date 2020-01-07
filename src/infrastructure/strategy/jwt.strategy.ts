@@ -2,8 +2,8 @@ import { Injectable, UnauthorizedException, Inject } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { MongoRepository } from 'typeorm';
 import { Strategy, ExtractJwt, VerifiedCallback } from 'passport-jwt';
-import { secretKey } from './../config/app.config';
-import { Users } from './../entity/user.entity';
+import { secretKey } from '../config/app.config';
+import { Users } from '../../entity/user.entity';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {

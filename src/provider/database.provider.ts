@@ -1,5 +1,5 @@
 import { createConnection } from 'typeorm';
-import { common } from '../config/app.config';
+import { common } from '../infrastructure/config/app.config';
 import { Users } from './../entity/user.entity';
 
 export const databaseProvider = [
