@@ -2,8 +2,8 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { logger } from './infrastructure/middleware/logger.middleware';
-import { HttpExceptionFilter } from './infrastructure/filter/httpException';
-import { TransformInterceptor } from './infrastructure/interceptor/transform.interceptor';
+import { ResponseErrorExceptionFilter } from './infrastructure/filter/response.error.exception.filter';
+import { ResponseSuccessTransformInterceptor } from './infrastructure/interceptor/response.success.transform.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -19,8 +19,8 @@ async function bootstrap() {
 
   app.use(logger);
   app.enableCors();
-  app.useGlobalFilters(new HttpExceptionFilter());// 全局注册错误的过滤器
-  app.useGlobalInterceptors(new TransformInterceptor());// 全局注册拦截器
+  app.useGlobalFilters(new ResponseErrorExceptionFilter());// 全局注册错误的过滤器
+  app.useGlobalInterceptors(new ResponseSuccessTransformInterceptor());// 全局注册拦截器
   await app.listen(3000);
 }
 bootstrap();

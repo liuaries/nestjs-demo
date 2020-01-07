@@ -1,6 +1,7 @@
 import { NestInterceptor, ExecutionContext, CallHandler } from '@nestjs/common';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { ApiCode } from '../enum/api.code.enum';
 
 export interface BaseResponse<T> {
   code: number;
@@ -9,7 +10,7 @@ export interface BaseResponse<T> {
   message: string;
 }
 
-export class TransformInterceptor<T>
+export class ResponseSuccessTransformInterceptor<T>
   implements NestInterceptor<T, BaseResponse<T>> {
   intercept(
     context: ExecutionContext,
@@ -18,7 +19,7 @@ export class TransformInterceptor<T>
     return next.handle().pipe(
       map(data => {
         return {
-          code: 0,
+          code: ApiCode.SUCCESS,
           data,
           message: '请求成功',
           success: true,

@@ -7,25 +7,25 @@ import {
 } from '@nestjs/common';
 
 @Catch(HttpException)
-export class HttpExceptionFilter implements ExceptionFilter {
+export class ResponseErrorExceptionFilter implements ExceptionFilter {
   catch(exception: HttpException, host: ArgumentsHost) {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse();
 
-    const message = exception.message.message;
-
+    const message = exception.message.message || exception.message.error;
+    const errorCode = (exception as any).errorCode;
+    const errorMessage = (exception as any).errorMessage
+    // console.log('==========exception:',exception)
     const status =
       exception instanceof HttpException
         ? exception.getStatus()
         : HttpStatus.INTERNAL_SERVER_ERROR;
 
     const errorResponse = {
-      data: {
-        error: message,
-      },
-      message: '请求失败',
+      data: {},
+      message: errorMessage || message,
       success: false,
-      code: status,
+      code: errorCode || status,
     };
 
     response.status(status);
