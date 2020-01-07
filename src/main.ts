@@ -21,8 +21,8 @@ async function bootstrap() {
   app.use(logger);
   app.enableCors();
   app.useGlobalPipes(new ApiParamsValidationPipe());
-  app.useGlobalFilters(new ResponseErrorExceptionFilter());// 全局注册错误的过滤器
-  app.useGlobalInterceptors(new ResponseSuccessTransformInterceptor());// 全局注册拦截器
+  app.useGlobalFilters(new ResponseErrorExceptionFilter());
+  app.useGlobalInterceptors(new ResponseSuccessTransformInterceptor());
   await app.listen(3000);
 }
 bootstrap();
