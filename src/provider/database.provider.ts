@@ -15,6 +15,7 @@ export const databaseProvider = [
         password: common.dbPwd,
         database: common.dbName,
         entities: [Users],
+        useUnifiedTopology: true,
       }),
   },
 ];

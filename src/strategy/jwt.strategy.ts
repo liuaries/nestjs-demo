@@ -5,7 +5,6 @@ import { Strategy, ExtractJwt, VerifiedCallback } from 'passport-jwt';
 import { secretKey } from './../config/app.config';
 import { Users } from './../entity/user.entity';
 
-
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
