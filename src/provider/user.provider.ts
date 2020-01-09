@@ -1,7 +1,7 @@
 import { Connection, getMongoRepository } from 'typeorm';
 import { Users } from '../entity/user.entity';
 
-export const userProvider = [
+export const UserProvider = [
   {
     provide: 'UserRepository',
     useFactory: (connection: Connection) =>

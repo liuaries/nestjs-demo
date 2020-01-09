@@ -3,7 +3,7 @@ import { ApiException } from '../exception/api.exception';
 import { plainToClass } from 'class-transformer';
 import { validate } from 'class-validator';
 
-export class ApiParamsValidationPipe implements PipeTransform {
+export class ParamsValidationPipe implements PipeTransform {
     async transform(value: any, metadata: ArgumentMetadata) {
         const { metatype } = metadata;
 
