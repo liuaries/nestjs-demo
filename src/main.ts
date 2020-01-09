@@ -2,9 +2,9 @@ import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
 import { logger } from './infrastructure/middleware/logger.middleware';
+import { ParamsValidationPipe } from './infrastructure/pipe/params.validation.pipe';
 import { ResponseErrorExceptionFilter } from './infrastructure/filter/response.error.exception.filter';
 import { ResponseSuccessTransformInterceptor } from './infrastructure/interceptor/response.success.transform.interceptor';
-import { ParamsValidationPipe } from './infrastructure/pipe/params.validation.pipe';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -16,7 +16,7 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, options);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup('api-doc', app, document);
 
   app.use(logger);
   app.enableCors();
