@@ -2,8 +2,9 @@ import { Injectable, Inject } from '@nestjs/common';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { MongoRepository } from 'typeorm';
 import { Users } from './../entity/user.entity';
-import { LoginDto } from './../dto/auth.dto';
+import { LoginReq } from '../dto/request/user.req';
 import { ApiException } from './../infrastructure/exception/api.exception';
+import { LoginUserInfoVO } from './../dto/response/user.vo';
 
 @Injectable()
 export class AuthService {
@@ -14,7 +15,7 @@ export class AuthService {
     private readonly userRepository: MongoRepository<Users>,
   ) {}
 
-  async login(data: LoginDto) {
+  async login(data: LoginReq) {
     const { name, password } = data;
     const entity = await this.userRepository.findOne({
       username: name,
@@ -29,10 +30,13 @@ export class AuthService {
     const payload = { id, name };
     const token = this.signToken(payload);
 
-    return {
-      ...payload,
+    const result: LoginUserInfoVO = {
+      userId: id.toString(),
+      name,
       token,
-    };
+    }
+
+    return result;
   }
 
   signToken(data: JwtModule) {

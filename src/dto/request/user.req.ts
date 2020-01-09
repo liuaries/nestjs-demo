@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString, Length, IsNotEmpty } from 'class-validator';
 
-export class LoginDto {
+export class LoginReq {
   @Length(4, 12, { message: '用户名必须是4到12个字符' })
   @IsString({ message: '用户名必须是字符串' })
   @IsNotEmpty({ message: '用户名不可为空' })

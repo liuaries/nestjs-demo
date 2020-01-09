@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsInt, IsString, Length, IsNotEmpty, IsIn } from 'class-validator';
 
-export class CreateCatDto {
+export class CreateCatReq {
   @Length(2, 8, { message: '名称必须2到8字符' })
   @IsString({ message: '名称必须是字符类型' })
   @IsNotEmpty({ message: '名称不可为空' })

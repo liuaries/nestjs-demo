@@ -1,8 +1,9 @@
 import { Controller, Body, Post, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiTags, ApiOperation } from '@nestjs/swagger';
+import { AuthGuard } from '@nestjs/passport';
 import { CatsService } from './../service/cats.service';
-import { CreateCatDto } from './../dto/create-cat.dto';
+import { CreateCatReq } from '../dto/request/cat.req';
+import { CatVO } from 'src/dto/response/cat.vo';
 
 @ApiBearerAuth()
 @ApiTags('CatsController')
@@ -13,13 +14,13 @@ export class CatsController {
 
   @ApiOperation({ summary: '添加猫' })
   @Post('/create')
-  create(@Body() createCatDto: CreateCatDto) {
+  create(@Body() createCatDto: CreateCatReq): void {
     this.catsService.create(createCatDto);
   }
 
   @ApiOperation({ summary: '查询猫列表' })
   @Post('/queryAll')
-  findAll() {
+  findAll(): CatVO[] {
     return this.catsService.findAll();
   }
 }
