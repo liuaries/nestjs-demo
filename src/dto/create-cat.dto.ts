@@ -1,10 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsInt, IsString, Length, IsEmpty, IsIn } from 'class-validator';
+import { IsInt, IsString, Length, IsNotEmpty, IsIn } from 'class-validator';
 
 export class CreateCatDto {
   @Length(2, 8, { message: '名称必须2到8字符' })
   @IsString({ message: '名称必须是字符类型' })
-  @IsEmpty({ message: '名称不可为空' })
+  @IsNotEmpty({ message: '名称不可为空' })
   @ApiProperty({
     required: true,
     type: String,
@@ -25,7 +25,7 @@ export class CreateCatDto {
   age: number;
 
   @IsString({ message: '品种必须是字符' })
-  @IsEmpty({ message: '品种不可为空' })
+  @IsNotEmpty({ message: '品种不可为空' })
   @IsIn(['泰迪', '柯基'], { message: '不支持该品种' })
   @ApiProperty({
     required: true,
