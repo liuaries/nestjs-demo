@@ -1,4 +1,3 @@
-import { ObjectID } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class LoginUserInfoVO {

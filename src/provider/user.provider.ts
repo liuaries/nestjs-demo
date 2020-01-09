@@ -1,4 +1,4 @@
-import { Connection, getMongoRepository } from 'typeorm';
+import { Connection } from 'typeorm';
 import { Users } from '../entity/user.entity';
 
 export const UserProvider = [

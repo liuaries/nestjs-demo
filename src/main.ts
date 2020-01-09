@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import * as helmet from 'helmet';
 import { AppModule } from './app.module';
 import { logger } from './infrastructure/middleware/logger.middleware';
 import { ParamsValidationPipe } from './infrastructure/pipe/params.validation.pipe';
@@ -19,6 +20,7 @@ async function bootstrap() {
   SwaggerModule.setup('api-doc', app, document);
 
   app.use(logger);
+  app.use(helmet());
   app.enableCors();
   app.useGlobalPipes(new ParamsValidationPipe());
   app.useGlobalFilters(new ResponseErrorExceptionFilter());
