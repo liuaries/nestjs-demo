@@ -1,7 +1,6 @@
 import { Controller, Body, Post, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiTags, ApiOperation } from '@nestjs/swagger';
-import { Cat } from './../service/interfaces/cat.interface';
 import { CatsService } from './../service/cats.service';
 import { CreateCatDto } from './../dto/create-cat.dto';
 

@@ -1,4 +1,4 @@
-import { Injectable, Inject} from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { JwtModule, JwtService } from '@nestjs/jwt';
 import { MongoRepository } from 'typeorm';
 import { Users } from './../entity/user.entity';
