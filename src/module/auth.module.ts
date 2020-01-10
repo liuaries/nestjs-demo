@@ -1,4 +1,3 @@
-import { DatabaseModule } from './database.module';
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthController } from './../controller/auth.controller';
@@ -9,7 +8,6 @@ import { UserProvider } from 'src/provider/user.provider';
 
 @Module({
   imports: [
-    DatabaseModule,
     JwtModule.register({
       privateKey: secretKey,
       signOptions: {

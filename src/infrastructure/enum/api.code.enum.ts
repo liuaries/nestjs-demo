@@ -1,4 +1,4 @@
 export enum ApiCode {
-  FAIL = 1, // 失败
-  SUCCESS = 0, // 成功
+  SUCCESS, // 成功
+  FAIL, // 失败
 }
