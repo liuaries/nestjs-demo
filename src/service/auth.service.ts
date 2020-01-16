@@ -34,7 +34,7 @@ export class AuthService {
       userId: id.toString(),
       name,
       token,
-    }
+    };
 
     return result;
   }

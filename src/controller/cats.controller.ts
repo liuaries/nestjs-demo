@@ -17,14 +17,14 @@ export class CatsController {
   @ApiOperation({ summary: '添加猫' })
   @Post('/create')
   create(@User() sessionUser: Users, @Body() createCatDto: CreateCatReq): void {
-    console.log(sessionUser)
+    console.log(sessionUser);
     this.catsService.create(createCatDto);
   }
 
   @ApiOperation({ summary: '查询猫列表' })
   @Post('/queryAll')
   findAll(@User() sessionUser: Users): CatVO[] {
-    console.log(sessionUser)
+    console.log(sessionUser);
     return this.catsService.findAll();
   }
 }

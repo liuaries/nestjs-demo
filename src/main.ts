@@ -19,12 +19,16 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api-doc', app, document);
 
-  app.use(logger);
   app.use(helmet());
   app.enableCors();
   app.useGlobalPipes(new ParamsValidationPipe());
+  app.use(logger);
   app.useGlobalFilters(new ResponseErrorExceptionFilter());
   app.useGlobalInterceptors(new ResponseSuccessTransformInterceptor());
-  await app.listen(3000);
+  await app.listen(3000, () => {
+    console.log(
+      `application started successfully, swagger address: http://127.0.0.1:3000/api-doc/`,
+    );
+  });
 }
 bootstrap();
