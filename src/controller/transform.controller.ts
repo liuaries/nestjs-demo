@@ -1,4 +1,4 @@
-import { Controller, Post} from '@nestjs/common';
+import { Controller, All} from '@nestjs/common';
 import { ApiTags, ApiOperation } from '@nestjs/swagger';
 import { TransformService } from './../service/transform.service';
 
@@ -8,7 +8,7 @@ export class TransformController {
   constructor(private readonly transformService: TransformService) {}
 
   @ApiOperation({ summary: '转换' })
-  @Post('/all')
+  @All('/all')
   async transform() {
     const mx2objFlag = await this.transformService.mx2obj()
     return mx2objFlag;
