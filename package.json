@@ -18,7 +18,7 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "build:document":"npx compodoc -p tsconfig.json -s"
+    "build:document": "npx compodoc -p tsconfig.json -s"
   },
   "dependencies": {
     "@nestjs/common": "^6.7.2",
@@ -32,6 +32,7 @@
     "fastify-swagger": "^2.5.0",
     "helmet": "^3.21.2",
     "mongodb": "^3.4.1",
+    "obj2gltf": "^3.0.4",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
     "reflect-metadata": "^0.1.13",
