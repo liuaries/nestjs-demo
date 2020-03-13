@@ -27,18 +27,20 @@ export class UploadController {
     @ApiConsumes('multipart/form-data')
     @ApiBody({
         description: '文件上传',
-        type: FilesUploadReq
+        type: FilesUploadReq,
     })
     @Post('files')
     @UseInterceptors(FilesInterceptor('files'))
     async uploadFiles(@UploadedFiles() files: any[]) {
-        if(files.length === 0){
-            throw new ApiException('参数有误')
+        if (files.length === 0) {
+            throw new ApiException('参数有误');
         }
-        let urls = [];
+        const urls = [];
         for (const file of files) {
-            const result = await this.uploadService.upload(file)
-            urls.push(result.path);
+            const { err, res } = await this.uploadService.upload(file);
+            if (!err) {
+                urls.push(res.path);
+            }
         }
         return urls;
     }

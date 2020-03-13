@@ -9,7 +9,7 @@ import { LoginUserInfoVO } from './../dto/response/user.vo';
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly JwtService: JwtService,
+    private readonly jwtService: JwtService,
 
     @Inject('UserRepository')
     private readonly userRepository: MongoRepository<Users>,
@@ -19,7 +19,7 @@ export class AuthService {
     const { name, password } = data;
     const entity = await this.userRepository.findOne({
       username: name,
-      password: password,
+      password,
     });
 
     if (!entity) {
@@ -40,6 +40,6 @@ export class AuthService {
   }
 
   signToken(data: JwtModule) {
-    return this.JwtService.sign(data);
+    return this.jwtService.sign(data);
   }
 }
