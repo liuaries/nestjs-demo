@@ -10,6 +10,7 @@ import { CatsController } from './controller/cats.controller';
 import { UploadController } from './controller/upload.controller';
 import { UserProvider } from './provider/user.provider';
 import { TasksModule } from './module/tasks.mdoule';
+import { UploadService } from './service/upload.service';
 
 @Module({
   imports: [
@@ -20,6 +21,6 @@ import { TasksModule } from './module/tasks.mdoule';
     TasksModule
   ],
   controllers: [CatsController, UploadController ],
-  providers: [...UserProvider, CatsService ],
+  providers: [...UserProvider, CatsService, UploadService ]
 })
 export class AppModule {}

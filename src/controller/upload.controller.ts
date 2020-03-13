@@ -1,15 +1,16 @@
-import { ApiException } from './../infrastructure/exception/api.exception';
 import { Controller, Post, UploadedFile, UploadedFiles, UseInterceptors } from '@nestjs/common';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { ApiTags, ApiBody, ApiConsumes, ApiOperation } from '@nestjs/swagger';
-import { createWriteStream } from 'fs';
-import { join } from 'path';
 
 import { FileUploadReq, FilesUploadReq } from './../dto/request/file.upload.req';
+import { UploadService } from './../service/upload.service';
+import { ApiException } from './../infrastructure/exception/api.exception';
 
 @ApiTags('UploadController')
 @Controller('upload')
 export class UploadController {
+    constructor(private readonly uploadService: UploadService) {}
+
     @ApiOperation({summary: '单文件上传'})
     @ApiConsumes('multipart/form-data')
     @ApiBody({
@@ -18,12 +19,8 @@ export class UploadController {
     })
     @Post('file')
     @UseInterceptors(FileInterceptor('file'))
-    uploadFile(@UploadedFile() file): string {
-        const path = join(__dirname, '../../upload/files', `${Date.now()}-${file.originalname}`)
-        const writeImage = createWriteStream(path)
-        writeImage.write(file.buffer)
-
-        return path;
+    async uploadFile(@UploadedFile() file) {
+        return await this.uploadService.upload(file);
     }
 
     @ApiOperation({summary: '多文件上传'})
@@ -34,16 +31,14 @@ export class UploadController {
     })
     @Post('files')
     @UseInterceptors(FilesInterceptor('files'))
-    uploadFiles(@UploadedFiles() files: any[]): string[] {
+    async uploadFiles(@UploadedFiles() files: any[]) {
         if(files.length === 0){
             throw new ApiException('参数有误')
         }
         let urls = [];
         for (const file of files) {
-            const path = join(__dirname, '../../upload/files', `${Date.now()}-${file.originalname}`)
-            const writeImage = createWriteStream(path)
-            writeImage.write(file.buffer)
-            urls.push(path)
+            const result = await this.uploadService.upload(file)
+            urls.push(result.path);
         }
         return urls;
     }
