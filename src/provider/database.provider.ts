@@ -15,8 +15,8 @@ export const databaseProvider = [
         database: common.dbName,
         entities: [Users],
         useUnifiedTopology: true,
-        logging: ["query", "error"],
-        logger: "file"
+        logging: ['query', 'error'],
+        logger: 'file',
       }),
   },
 ];

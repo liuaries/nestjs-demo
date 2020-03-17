@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { DocumentBuilder, SwaggerModule, ApiOperation } from '@nestjs/swagger';
 import * as helmet from 'helmet';
+import * as cors from 'cors';
 import { AppModule } from './app.module';
 import { logger } from './infrastructure/middleware/logger.middleware';
 import { ParamsValidationPipe } from './infrastructure/pipe/params.validation.pipe';
@@ -17,17 +18,21 @@ async function bootstrap() {
     .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, options);
-  SwaggerModule.setup('api-doc', app, document);
+  SwaggerModule.setup('api', app, document);
 
   app.use(helmet());
-  app.enableCors();
+  app.use(cors({
+    origin: '*',
+    credentials: true,
+  }))
+  // app.enableCors();
   app.useGlobalPipes(new ParamsValidationPipe());
   app.use(logger);
   app.useGlobalFilters(new ResponseErrorExceptionFilter());
   app.useGlobalInterceptors(new ResponseSuccessTransformInterceptor());
   await app.listen(3000, () => {
     console.log(
-      `application started successfully, swagger address: http://127.0.0.1:3000/api-doc/`,
+      `application started successfully, swagger address: http://127.0.0.1:3000/`,
     );
   });
 }

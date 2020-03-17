@@ -17,10 +17,10 @@ export class ResponseSuccessTransformInterceptor<T>
     next: CallHandler<T>,
   ): Observable<BaseResponse<T>> | Promise<Observable<BaseResponse<T>>> {
     return next.handle().pipe(
-      map(data => {
+      map(res => {
         return {
           code: ApiCode.SUCCESS,
-          data,
+          data: res || null,
           message: '请求成功',
           success: true,
         };
