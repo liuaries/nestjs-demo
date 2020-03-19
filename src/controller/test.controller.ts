@@ -1,10 +1,12 @@
-import { Controller, UseGuards, Get, Post } from '@nestjs/common';
+import { LoggingInterceptor } from './../infrastructure/interceptor/logging.interceptor';
+import { Controller, UseGuards, Get, Post, UseInterceptors } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { Session } from 'src/infrastructure/decorator/session.decorator';
 import { Users } from './../entity/user.entity';
 import { UserService } from './../service/user.service';
 
 // @UseGuards(AuthGuard())
+@UseInterceptors(new LoggingInterceptor())
 @Controller('test')
 export class TestController {
   constructor(

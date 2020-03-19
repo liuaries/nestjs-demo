@@ -3,7 +3,6 @@ import { DocumentBuilder, SwaggerModule, ApiOperation } from '@nestjs/swagger';
 import * as helmet from 'helmet';
 import * as cors from 'cors';
 import { AppModule } from './app.module';
-import { logger } from './infrastructure/middleware/logger.middleware';
 import { ParamsValidationPipe } from './infrastructure/pipe/params.validation.pipe';
 import { ResponseErrorExceptionFilter } from './infrastructure/filter/response.error.exception.filter';
 import { ResponseSuccessTransformInterceptor } from './infrastructure/interceptor/response.success.transform.interceptor';
@@ -27,7 +26,6 @@ async function bootstrap() {
   }))
   // app.enableCors();
   app.useGlobalPipes(new ParamsValidationPipe());
-  app.use(logger);
   app.useGlobalFilters(new ResponseErrorExceptionFilter());
   app.useGlobalInterceptors(new ResponseSuccessTransformInterceptor());
   await app.listen(3000, () => {

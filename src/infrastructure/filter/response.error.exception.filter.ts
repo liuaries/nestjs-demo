@@ -15,7 +15,7 @@ export class ResponseErrorExceptionFilter implements ExceptionFilter {
     const message = exception.message.message || exception.message.error;
     const errorCode = (exception as any).errorCode;
     const errorMessage = (exception as any).errorMessage;
-    // console.log('==========exception:',exception)
+    
     const status =
       exception instanceof HttpException
         ? exception.getStatus()
