@@ -1,8 +1,6 @@
 import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { ScheduleModule } from '@nestjs/schedule';
-import { ConfigModule } from '@nestjs/config';
-
 import { AuthModule } from './module/auth.module';
 import { DatabaseModule } from './Module/database.module';
 import { defaultSgy } from './infrastructure/config/app.config';
@@ -13,13 +11,15 @@ import { UploadController } from './controller/upload.controller';
 import { TasksModule } from './module/tasks.mdoule';
 import { UploadService } from './service/upload.service';
 import { UserService } from './service/user.service';
+import { ConfigModule } from './module/config.module';
 
 @Module({
   imports: [
+    ConfigModule.register({ folder: './config' }),
     AuthModule,
     DatabaseModule,
     PassportModule.register({ defaultStrategy: defaultSgy }),
-    // ScheduleModule.forRoot(),
+    ScheduleModule.forRoot(),
     // TasksModule,
   ],
   controllers: [CatsController, TestController, UploadController ],
