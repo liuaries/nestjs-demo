@@ -1,11 +1,11 @@
+import { SessionUser } from './../infrastructure/decorator/session.decorator';
 import { LoggingInterceptor } from './../infrastructure/interceptor/logging.interceptor';
-import { Controller, UseGuards, Get, Post, UseInterceptors } from '@nestjs/common';
+import { Controller, UseGuards, Get, Post, UseInterceptors, Request } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { Session } from 'src/infrastructure/decorator/session.decorator';
 import { Users } from './../entity/user.entity';
 import { UserService } from './../service/user.service';
 
-// @UseGuards(AuthGuard())
+@UseGuards(AuthGuard())
 @UseInterceptors(new LoggingInterceptor())
 @Controller('test')
 export class TestController {
@@ -14,11 +14,12 @@ export class TestController {
   ){}
 
   @Get('/query/current/user')
-  queryCurrentUser(@Session() sessionUser: Users) {
-    console.log(sessionUser)
+  queryCurrentUser(@SessionUser() user) {
+    console.log(user)
   }
 
   @Post('/queryAllUsers')
+  @UseGuards(AuthGuard() )
   async queryAllUsers() {
     return await this.userService.findAll()
   }

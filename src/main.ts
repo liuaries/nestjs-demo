@@ -1,7 +1,6 @@
 import { NestFactory } from '@nestjs/core';
-import { DocumentBuilder, SwaggerModule, ApiOperation } from '@nestjs/swagger';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as helmet from 'helmet';
-import * as cors from 'cors';
 import { AppModule } from './app.module';
 import { ParamsValidationPipe } from './infrastructure/pipe/params.validation.pipe';
 import { ResponseErrorExceptionFilter } from './infrastructure/filter/response.error.exception.filter';
@@ -20,11 +19,7 @@ async function bootstrap() {
   SwaggerModule.setup('api', app, document);
 
   app.use(helmet());
-  app.use(cors({
-    origin: '*',
-    credentials: true,
-  }))
-  // app.enableCors();
+  app.enableCors();
   app.useGlobalPipes(new ParamsValidationPipe());
   app.useGlobalFilters(new ResponseErrorExceptionFilter());
   app.useGlobalInterceptors(new ResponseSuccessTransformInterceptor());
