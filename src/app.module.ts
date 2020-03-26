@@ -11,11 +11,9 @@ import { UploadController } from './controller/upload.controller';
 import { TasksModule } from './module/tasks.mdoule';
 import { UploadService } from './service/upload.service';
 import { UserService } from './service/user.service';
-import { ConfigModule } from './module/config.module';
 
 @Module({
   imports: [
-    ConfigModule.register({ folder: './config' }),
     AuthModule,
     DatabaseModule,
     PassportModule.register({ defaultStrategy: defaultSgy }),

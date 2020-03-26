@@ -1,23 +1,23 @@
-import { CONFIG_OPTIONS } from './../infrastructure/config/constants';
 import { createConnection } from 'typeorm';
-import { common } from '../infrastructure/config/app.config';
 import { Users } from './../entity/user.entity';
+import { ConfigService } from 'src/service/config.service';
 
-export const databaseProvider = 
+export const DatabaseProvider = 
 {
   provide: 'CommonConnection',
-  useFactory: async () =>
+  useFactory: async (config: ConfigService) =>
     await createConnection({
       type: 'mongodb',
-      host: common.dbHost,
-      port: common.dbPort,
-      username: common.dbUser,
-      password: common.dbPwd,
-      database: common.dbName,
+      host: config.getString('dbHost'),
+      port: config.getNumber('dbPort'),
+      username: config.getString('dbUser'),
+      password: config.getString('dbPwd'),
+      database: config.getString('dbName'),
       entities: [Users],
       useUnifiedTopology: true,
       logging: ['query', 'error'],
       logger: 'file',
     }),
+    inject: [ConfigService]
 };
 
