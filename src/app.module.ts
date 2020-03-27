@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { ScheduleModule } from '@nestjs/schedule';
 import { AuthModule } from './module/auth.module';
-import { DatabaseModule } from './Module/database.module';
-import { defaultSgy } from './infrastructure/config/app.config';
+import { ConfigModule } from './module/config.module';
+import { DEFAULT_SGY } from './infrastructure/constants';
 import { CatsService } from './service/cats.service';
 import { CatsController } from './controller/cats.controller';
 import { TestController } from './controller/test.controller';
@@ -15,8 +15,8 @@ import { UserService } from './service/user.service';
 @Module({
   imports: [
     AuthModule,
-    DatabaseModule,
-    PassportModule.register({ defaultStrategy: defaultSgy }),
+    ConfigModule,
+    PassportModule.register({ defaultStrategy: DEFAULT_SGY }),
     ScheduleModule.forRoot(),
     // TasksModule,
   ],

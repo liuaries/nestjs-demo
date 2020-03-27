@@ -2,19 +2,21 @@ import { Injectable, UnauthorizedException, Inject } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { MongoRepository } from 'typeorm';
 import { Strategy, ExtractJwt, VerifiedCallback } from 'passport-jwt';
-import { secretKey } from '../config/app.config';
 import { Users } from '../../entity/user.entity';
+import { ConfigService } from 'src/service/config.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(
+    private readonly configService: ConfigService,
+
     @Inject('UserRepository')
     private readonly userRepository: MongoRepository<Users>,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: secretKey,
+      secretOrKey: configService.getString('secretKey'),
     });
   }
 

@@ -1,5 +1,5 @@
 import { Module, Global } from '@nestjs/common';
-import { DatabaseProvider } from './../provider/database.provider';
+import { DatabaseProvider } from '../provider/database.provider';
 import { ConfigService } from 'src/service/config.service';
 
 @Global()
@@ -7,4 +7,4 @@ import { ConfigService } from 'src/service/config.service';
   providers: [ConfigService, DatabaseProvider],
   exports: [ConfigService, DatabaseProvider],
 })
-export class DatabaseModule {}
+export class ConfigModule {}
