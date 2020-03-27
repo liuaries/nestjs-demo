@@ -18,6 +18,6 @@ export const DatabaseProvider =
       logging: ['query', 'error'],
       logger: 'file',
     }),
-    inject: [ConfigService]
+  inject: [ConfigService]
 };
 

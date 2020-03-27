@@ -1,6 +1,7 @@
-import { Module } from '@nestjs/common';
+import { Module, CacheModule, CacheInterceptor } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { ScheduleModule } from '@nestjs/schedule';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 import { AuthModule } from './module/auth.module';
 import { ConfigModule } from './module/config.module';
 import { DEFAULT_SGY } from './infrastructure/constants';
@@ -16,11 +17,24 @@ import { UserService } from './service/user.service';
   imports: [
     AuthModule,
     ConfigModule,
+    CacheModule.register(),
     PassportModule.register({ defaultStrategy: DEFAULT_SGY }),
     ScheduleModule.forRoot(),
-    // TasksModule,
+    TasksModule,
   ],
-  controllers: [CatsController, TestController, UploadController ],
-  providers: [CatsService, UserService, UploadService ],
+  controllers: [
+    CatsController, 
+    TestController, 
+    UploadController
+  ],
+  providers: [
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: CacheInterceptor,
+    },
+    CatsService, 
+    UserService, 
+    UploadService 
+  ],
 })
 export class AppModule {}
