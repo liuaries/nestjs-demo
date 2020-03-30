@@ -1,7 +1,9 @@
-import { Module, CacheModule, CacheInterceptor } from '@nestjs/common';
+import { Module, CacheModule, CacheInterceptor, MiddlewareConsumer, RequestMethod, NestModule } from '@nestjs/common';
 import { PassportModule } from '@nestjs/passport';
 import { ScheduleModule } from '@nestjs/schedule';
 import { APP_INTERCEPTOR } from '@nestjs/core';
+import * as rateLimit from 'express-rate-limit';
+
 import { AuthModule } from './module/auth.module';
 import { ConfigModule } from './module/config.module';
 import { DEFAULT_SGY } from './infrastructure/constants';
@@ -12,6 +14,12 @@ import { UploadController } from './controller/upload.controller';
 import { TasksModule } from './module/tasks.mdoule';
 import { UploadService } from './service/upload.service';
 import { UserService } from './service/user.service';
+ 
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 200,
+  message: 'to many request from this ip, place try again later'
+})
 
 @Module({
   imports: [
@@ -37,4 +45,10 @@ import { UserService } from './service/user.service';
     UploadService 
   ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(limiter)
+      .forRoutes({ path: 'auth', method: RequestMethod.ALL });
+  }
+}
