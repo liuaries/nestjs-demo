@@ -26,8 +26,8 @@ export class ParamsValidationPipe implements PipeTransform<any> {
     return value;
   }
 
-  private toValidate(metatype): boolean {
-    const types = [String, Boolean, Number, Array, Object];
-    return !types.find(type => metatype === type);
+  private toValidate(metatype: Function): boolean {
+    const types: Function[] = [String, Boolean, Number, Array, Object];
+    return !types.includes(metatype);
   }
 }
