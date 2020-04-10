@@ -13,7 +13,7 @@ export class EmailService {
 
     sendEmail(mailConfig: iContent): Promise<iResult> {
         return new Promise((resolve, reject) => {
-            const {transport = 'default', target, title, text, html } = mailConfig;
+            const {transport = 'default', target, title, text, html, attachments } = mailConfig;
             let transporter
             if(transport === 'default') {
                 transporter = nodemailer.createTransport({
@@ -47,7 +47,9 @@ export class EmailService {
             if(html) {
                 mailOptions.html = html
             }
-            
+            if(attachments) {
+                mailOptions.attachments = attachments
+            }
             let result = {
                 httpCode: 200,
                 message: '发送成功!',

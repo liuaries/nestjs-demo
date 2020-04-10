@@ -4,6 +4,7 @@ export interface iMailOptions {
     subject: String;
     text?: String;
     html?: String;
+    attachments?: file[]
 }
 
 export interface iContent {
@@ -12,6 +13,12 @@ export interface iContent {
     title: String;
     text?: String;
     html?: String;
+    attachments?: file[]
+}
+
+export interface file {
+    filename: String;
+    path: String;
 }
 
 export interface iResult {
