@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpStatus } from '@nestjs/common';
 import * as nodemailer from 'nodemailer';
 import * as smtpTransport from 'nodemailer-smtp-transport';
 
@@ -14,30 +14,30 @@ export class EmailService {
     sendEmail(mailConfig: iContent): Promise<iResult> {
         return new Promise((resolve, reject) => {
             const {transport = 'default', target, title, text, html, attachments } = mailConfig;
+
             let transporter
+            const emailHost = this.configService.getString('email_host')
+            const emailPort = this.configService.getNumber('email_port')
+            const authUser = this.configService.getString('email_auth_user')
+            const authPass = this.configService.getString('email_auth_pass')
+            
             if(transport === 'default') {
                 transporter = nodemailer.createTransport({
-                    host: this.configService.getString('email_host'),
-                    auth: {
-                        user: this.configService.getString('email_auth_user'),
-                        pass: this.configService.getString('email_auth_pass')
-                    }
+                    host: emailHost,
+                    auth: { user: authUser, pass: authPass }
                 })
             } else {
                 transporter = nodemailer.createTransport(smtpTransport({
-                    host: this.configService.getString('email_host'),
+                    host: emailHost,
                     secure: true,
                     secureConnection: true,
-                    port: this.configService.getNumber('email_port'),
-                    auth: {
-                        user: this.configService.getString('email_auth_user'),
-                        pass: this.configService.getString('email_auth_pass')
-                    }
+                    port: emailPort,
+                    auth: { user: authUser,  pass: authPass }
                 }))
             }
 
             const mailOptions: iMailOptions = {
-                from: this.configService.getString('email_auth_user'),
+                from: authUser,
                 to: target,
                 subject: title
             }
@@ -51,13 +51,13 @@ export class EmailService {
                 mailOptions.attachments = attachments
             }
             let result = {
-                httpCode: 200,
+                httpCode: HttpStatus.OK,
                 message: '发送成功!',
             }
             try {
                 transporter.sendMail(mailOptions,(err, info)=>{
                     if (err) {
-                        result.httpCode = 500;
+                        result.httpCode = HttpStatus.INTERNAL_SERVER_ERROR;
                         result.message = err;
 
                         reject(result);
@@ -65,7 +65,7 @@ export class EmailService {
                     resolve(result);
                 })
             } catch (err) {
-                result.httpCode = 500;
+                result.httpCode = HttpStatus.INTERNAL_SERVER_ERROR;
                 result.message = err;
                 reject(result);
             }
