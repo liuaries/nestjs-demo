@@ -21,7 +21,7 @@
     "build:document": "npx compodoc -p tsconfig.json -s"
   },
   "dependencies": {
-    "@nestjs/common": "^6.7.2",
+    "@nestjs/common": "^9.1.1",
     "@nestjs/config": "^0.3.0",
     "@nestjs/core": "^6.7.2",
     "@nestjs/jwt": "^6.1.1",
