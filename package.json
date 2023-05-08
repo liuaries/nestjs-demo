@@ -35,7 +35,7 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express-rate-limit": "^5.1.1",
-    "fastify-swagger": "^2.5.0",
+    "fastify-swagger": "^5.2.0",
     "helmet": "^3.21.2",
     "mongodb": "^3.4.1",
     "nodemailer": "^6.4.6",
